@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, request, abort, render_template, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from flask_bootstrap import Bootstrap
+from sqlalchemy.orm import sessionmaker
 import os
 
 #config
@@ -62,7 +63,7 @@ bootstrap = Bootstrap(app)
 
 @app.route("/")
 def index():
-    return render_template("index.html", tarefas = Tarefa.query.all())
+    return render_template("index.html", tarefas = Tarefa.query.order_by(Tarefa.ordem).all())
 
 #POST FROM WEBSITE
 @app.route('/add_tarefa/', methods=['POST'])
@@ -72,8 +73,11 @@ def add_tarefa():
     tarefa = Tarefa(
         tarNome=request.form.get('tarNome'),
         dataLimite=request.form.get('dataLimite'),
-        custo=request.form.get('custo')
+        custo=request.form.get('custo'),
+        ordem=Tarefa.query.count()+1
     )
+    if tarefa.dataLimite == '':
+        tarefa.dataLimite = None
     db.session.add(tarefa)
     db.session.commit()
     return redirect(url_for("index"))
@@ -101,3 +105,15 @@ def delete(tarId):
     db.session.delete(tarefa)
     db.session.commit()
     return redirect(url_for("index"))
+
+#PUT
+@app.route('/tarefa/<int:tarId>', methods=['PUT'])
+def update2_tarefa(tarId):
+    if not request.json:
+        abort(400)
+    tarefa = Tarefa.query.get(tarId)
+    if tarefa is None:
+        abort(404)
+    tarefa.ordem = request.json.get('ordem', tarefa.ordem)
+    db.session.commit()
+    return jsonify(tarefa.to_json())
