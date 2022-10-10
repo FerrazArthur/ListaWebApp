@@ -16,7 +16,8 @@ pra iniciar o ambiente:
 
 ##### Passo 1) Executar o arquivo setup1.sh
 
-##### Passo 2) Executar **docker-compose up** e aguardar o mysql criar seus arquivos
+##### Passo 2) Executar o comando abaixo e aguardar o mysql terminar de criar o container
+>**docker-compose up**
 
 ##### Passo 3) Executar o arquivo setup2.sh
 
