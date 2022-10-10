@@ -1,5 +1,2 @@
-Scripts/
-Lib/
-Env/
-Include/
-pyvenv.cfg
+database/**
+!database/listaApp
