@@ -4,7 +4,7 @@ services:
         image: mysql:8.0.30
         container_name: mysql
         restart: unless-stopped
-        tty: 'true'
+        tty: true
         ports:
             - "3307:3306"
         environment:
@@ -12,24 +12,24 @@ services:
             MYSQL_PASSWORD: user
             MYSQL_ROOT_PASSWORD: user
             MYSQL_DATABASE: listaApp
-            MYSQL_INITDB_SKIP_TZINFO: 'true'
+            MYSQL_INITDB_SKIP_TZINFO: true
         networks:
             - app-network
         volumes:
             - ./database:/var/lib/mysql
-    imuniza_db:
+    tarefas-app:
         build: ./
-        container_name: app
-        command: sh -c "flask --debug run --host=0.0.0.0 --port=8000"
+        container_name: tarefas-app
+        command: sh -c "export DEV_DATABASE_URL=mysql+pymysql://root:user@mysql:3306/listaApp && flask --debug --app=app.py run --host=0.0.0.0 --port=8000"
         restart: unless-stopped
         tty: true
         working_dir: /app/
-        environment:
-            - DB_HOST=mysql-app
-            - DB_PORT=3306
-            - DB_USERNAME=user
-            - DB_PASSWORD=user
-            - DB_DATABASE=listaApp
+        # environment:
+        #     - DB_HOST=mysql-app
+        #     - DB_PORT=3306
+        #     - DB_USERNAME=user
+        #     - DB_PASSWORD=user
+        #     - DB_DATABASE=listaApp
         depends_on:
             - mysql-app
         ports:

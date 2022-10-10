@@ -10,6 +10,16 @@ pra iniciar o ambiente:
 
 ##### Passo 2) Instalar o docker ce e o docker-compose mais atuais para seu sistema atual;
 
+##### Passo 3) Executar o arquivo setup1.sh
+
+### Passos para criar os containers após o clone:
+
+##### Passo 1) Executar o arquivo setup1.sh
+
+##### Passo 2) Executar **docker-compose up** e aguardar o mysql criar seus arquivos
+
+##### Passo 3) Executar o arquivo setup2.sh
+
 ***
 
 ### Hostear a aplicação no local host:
@@ -20,7 +30,7 @@ pra iniciar o ambiente:
 ###### ***Os seguintes containers devem estar rodando na sua máquina:***
 
 	mysql -> container do banco de dados;
-	app -> container da aplicação laravel.
+	tarefas-app -> container da aplicação.
 
 #### O site estará acessivel através do link:
 
