@@ -93,11 +93,12 @@ def update_tarefa(tarId):
     tarefa.tarNome = request.form.get('tarNome', tarefa.tarNome)
     tarefa.dataLimite = request.form.get('dataLimite', tarefa.dataLimite)
     tarefa.custo = request.form.get('custo', tarefa.custo)
+    tarefa.ordem = request.form.get('ordem', tarefa.ordem)
     db.session.commit()
     return redirect(url_for("index"))
 
 #DELETE FROM WEBSITE
-@app.route("/delete/<int:tarId>", methods=["POST"])
+@app.route("/delete/<int:tarId>", methods=['POST'])
 def delete(tarId):
     tarefa = Tarefa.query.get(tarId)
     if tarefa is None:
