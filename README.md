@@ -19,7 +19,14 @@ pra iniciar o ambiente:
 ##### Passo 2) Executar o comando abaixo e aguardar o mysql terminar de criar o container
 >**docker-compose up**
 
-##### Passo 3) Executar o arquivo setup2.sh
+##### Passo 3) Executar a criação da tabela Tarefas seguindo os comandos
+>**docker exec -it mysql mysql -p**
+
+>**create table listaApp.Tarefas(tarId int primary key auto_increment, tarNome varchar(255) not null unique, custo decimal(10, 2), dataLimite date, ordem int);**
+
+>**exit**
+
+##### Passo 4) Executar o arquivo setup2.sh
 
 ***
 

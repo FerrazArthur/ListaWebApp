@@ -23,3 +23,9 @@ body {
       padding: 40px 15px;
       text-align: center;
   }
+  #data-table1 span {
+    display:none; 
+}
+.swap-button {
+  font-size: 8px;
+}

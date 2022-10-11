@@ -1,0 +1,29 @@
+<!-- Modal 3 pra deletar uma tarefa -->
+<div class="modal fade" id="delete_tarefa_{{tarefa['tarId']}}" tabindex="-1" role="dialog"
+aria-labelledby="basicModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"
+                    aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Deletar tarefa</h4>
+            </div>
+            <form action="{{url_for('delete', tarId=tarefa['tarId'])}}" method="post">
+                <div class="modal-body">
+                    <div class="form-group row">
+                        <label class="col-sm-12 col-form-label">tem certeza que deseja deletar a terefa <span
+                                style='font-weight:bold;color:red'>{{tarefa['title']}}</span>
+                            ?</label>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default"
+                        data-dismiss="modal">Fechar</button>
+                    <button type="submit" class="btn btn-danger">Deletar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Fim do Modal 3-->
