@@ -1,8 +1,8 @@
 from flask import Flask, jsonify, request, abort, render_template, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from flask_bootstrap import Bootstrap
-from sqlalchemy.orm import sessionmaker
-import os
+from pymemcache.client import base
+import os, re
 
 #config
 class Config:
@@ -29,6 +29,8 @@ config = {
     'production': ProductionConfig,
     'default': DevelopmentConfig
 }
+#conectando com memcached
+client = base.Client(('memcached-app', 11211))
 
 #init
 db = SQLAlchemy()
@@ -96,6 +98,33 @@ def update_tarefa(tarId):
     tarefa.ordem = request.form.get('ordem', tarefa.ordem)
     db.session.commit()
     return redirect(url_for("index"))
+
+#PUT FROM WEBSITE TO CHANGE PRIORITY
+@app.route('/update_priority/<int:tarId>')
+def update_priority(tarId):
+    '''Caso seja a primeira ativação dessa função, guarde a tarefa escolhida na tabela.
+    Caso seja a segunda ativação e seja o mesmo elemento, resete a variavel cached_tarefa para None.
+    Caco seja a segunda ativação e seja uma tarefa diferente, troque a prioridade entre as duas e volte cached_tarefa para None.'''
+    print("auau")
+    if client.get('cached_tarefa', False) == False:#nao ha essa chave registrada?
+        client.add('cached_tarefa', str(tarId), 60)
+    elif str(client.get('cached_tarefa'))=="b'"+str(tarId)+"'":#esse é o formato que o get retorna, b'<value>'
+        client.delete('cached_tarefa')#se a mesma id ja esta registrada, apague
+    elif str(client.get('cached_tarefa'))!="b'"+str(tarId)+"'":
+    #trocando ordem entre duas Tarefas
+        tarefaTemp1=Tarefa.query.get(int(re.search("[0-9]+",str(client.get('cached_tarefa', 0))).group())) #using regex to get int value
+        tarefaTemp2=Tarefa.query.get(tarId)
+        client.delete('cached_tarefa')
+        if tarefaTemp1 is None or tarefaTemp2 is None:
+            print("nao deu certo")
+            abort(404)
+        ordemTemp=tarefaTemp1.ordem
+        tarefaTemp1.ordem=tarefaTemp2.ordem
+        tarefaTemp2.ordem=ordemTemp
+        db.session.commit()
+    return redirect(url_for("index"))
+
+
 
 #DELETE FROM WEBSITE
 @app.route("/delete/<int:tarId>", methods=['POST'])
