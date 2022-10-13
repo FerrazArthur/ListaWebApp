@@ -12,29 +12,10 @@ pra iniciar o ambiente:
 
 ## Passos para criar os containers após o clone:
 
-#### Passo 1) Executar o arquivo setup1.sh
-
-#### Passo 2) Executar o comando abaixo e aguardar o mysql terminar de criar o container
+#### Passo 3) Executar o comando abaixo e aguardar o mysql terminar de criar o container
 >**docker-compose up**
 
-<<<<<<< HEAD
-##### Passo 3) Executar a criação da tabela Tarefas seguindo os comandos
->**docker exec -it mysql mysql -p** (entre com a senha -> user)
-
->**create table listaApp.Tarefas(tarId int primary key auto_increment, tarNome varchar(255) not null unique, custo decimal(10, 2), dataLimite date, ordem int);**
-
->**exit**
-
-##### Passo 4) Executar o arquivo setup2.sh
-=======
-#### Passo 3) Executar os comandos abaixo, em outro terminal, para criar a tabela
->**docker exec -it mysql -p** 
-
->**create table listaApp.Tarefas(tarId int primary key auto_increment, tarNome varchar(255) not null unique, custo decimal(10, 2), dataLimite date, ordem int);**
-
-#### Passo 4) Saia do container e execute o arquivo setup2.sh para que as tarefas salvas no git estejam disponíveis na sua maquina
->>>>>>> 3bc3382af90f5346e74a257e924cb46ea66527d9
-
+#### Passo 4) Executar o script setup.sh para criar a tabela
 ***
 
 ## Hostear a aplicação no local host:

@@ -33,12 +33,6 @@ services:
         restart: unless-stopped
         tty: true
         working_dir: /app/
-        # environment:
-        #     - DB_HOST=mysql-app
-        #     - DB_PORT=3306
-        #     - DB_USERNAME=user
-        #     - DB_PASSWORD=user
-        #     - DB_DATABASE=listaApp
         depends_on:
             - mysql-app
             - memcached-app
