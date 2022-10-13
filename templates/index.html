@@ -14,15 +14,18 @@
         <table id="table-1" class="table table-striped">
             <thead>
                 <tr>
+                    <th></th>
                     <th>Tarefa</th>
                     <th>Data limite</th>
                     <th>custo</th>
-                    <th colspan="3">Ações</th>
+                    <th colspan="3"></th>
                 </tr>
             </thead>
             <tbody>
                 {% for tarefa in tarefas %}
                 <tr>
+                    <td><button type="button" class="swap-button" data-toggle="modal"
+                        data-target="#update_priority_{{tarefa['tarId']}}">Mover</button></td>
                     <td>{{ tarefa.tarNome }}</td>
                     <td>{{ tarefa.dataLimite }}</td>
                     <td>{{ tarefa.custo }}</td>
@@ -40,13 +43,4 @@
         </table>
     </div>
 </div>
-{% endblock %}
-
-{% block script %}
-<script type="text/javascript">
-    $(document).ready(function() {
-        // Initialise the table
-        $("#table-1").tableDnD();
-    });
-    </script>
 {% endblock %}
