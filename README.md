@@ -26,6 +26,7 @@ pra iniciar o ambiente:
 ##### ***Os seguintes containers devem estar rodando na sua máquina:***
 
 	mysql -> container do banco de dados;
+	memcached -> container para gerenciar um cache local;
 	tarefas-app -> container da aplicação.
 
 ### O site estará acessivel através do link:
