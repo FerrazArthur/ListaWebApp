@@ -17,15 +17,22 @@ body {
     }
 
   td, th {
-      text-align: center
+      text-align: center;
+      box-sizing: border-box;
   }
+  tbody, thead {
+    display: block;
+  }
+  tr:after {
+    content: ' ';
+    display: block;
+    visibility: hidden;
+    clear: both;
+}
   .starter-template {
       padding: 40px 15px;
       text-align: center;
   }
-  #data-table1 span {
-    display:none; 
-}
 .swap-button {
   font-size: 8px;
 }
