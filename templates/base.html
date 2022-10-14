@@ -5,6 +5,7 @@
 {% block head %}
 {{ super() }}
 <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
 {% endblock %}
 
 {% block navbar %}
@@ -31,6 +32,24 @@
 {% endblock %}
 
 {% block content %}
+<script>
+    function callURL(tarId)
+    {
+        const req = new XMLHttpRequest();
+        req.open("GET", "http://172.17.0.1:8000/update_priority/" + tarId);
+        req.send();
+        location. reload();
+    }
+</script>
+<script>
+    function changeColor(id, custo)
+    {
+        element = document.getElementById(id)
+        if ( custo >= 1000)
+            element.style.backgroundColor = "#cfda34";
+        return id
+    }
+</script>
 <div class="container">
     {% block page_content %} {% endblock %}
 </div>

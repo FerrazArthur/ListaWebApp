@@ -7,11 +7,10 @@
     </h1>
 </div>
 
-<button type="button" data-toggle="modal" class="btn btn-lg btn-primary" data-target="#insert_tarefa">Insira uma tarefa</button>
 {% include "adicionarTarefa.html" %}
 <div class="row">
-    <div class="col-md-6">
-        <table id="table-1" class="table table-striped">
+    <div class="col-md-6"style="width: 70%">
+        <table class="table table-striped" style="table-layout: fixed;">
             <thead>
                 <tr>
                     <th></th>
@@ -21,11 +20,19 @@
                     <th colspan="3"></th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody style="height: 430px; overflow-y: auto;">
                 {% for tarefa in tarefas %}
-                <tr>
-                    <td><button type="button" class="swap-button" data-toggle="modal"
-                        data-target="#update_priority_{{tarefa['tarId']}}">Mover</button></td>
+                <tr id="{{ tarefa['tarId'] }}">
+                    <script type="text/javascript">
+                        changeColor({{ tarefa['tarId'] }}, {{ tarefa['custo'] }});
+                     </script>
+                    <!-- for some reason, this method never seems to work. i had to use ajax and javascript to be able to pull
+                        the url i wanted
+                        <td><button type="button" class="swap-button" data-toggle="modal"
+                        data-target="#update_priority_{{tarefa['tarId']}}">Mover</button></td> 
+                    <td><a href "http://172.17.0.1:8000/update_priority/{{ tarefa['tarId'] }}">SWAP</a></td> -->
+                    <td><button type="button" class="swap-button"
+                        onclick="callURL({{ tarefa.tarId }})">Mover</button></td>
                     <td>{{ tarefa.tarNome }}</td>
                     <td>{{ tarefa.dataLimite }}</td>
                     <td>{{ tarefa.custo }}</td>
@@ -35,12 +42,12 @@
                     <td><button type="button" class="btn btn-danger" data-toggle="modal"
                             data-target="#delete_tarefa_{{tarefa['tarId']}}">Deletar</button></td>
                     {% include "removerTarefa.html" %}
-                    
-                
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
     </div>
 </div>
+<button type="button" data-toggle="modal" class="btn btn-lg btn-primary" data-target="#insert_tarefa">Insira uma tarefa</button>
+
 {% endblock %}

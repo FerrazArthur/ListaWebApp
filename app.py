@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, request, abort, render_template, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from flask_bootstrap import Bootstrap
+from flask_cors import CORS
 from pymemcache.client import base
 import os, re
 
@@ -62,6 +63,7 @@ class Tarefa(db.Model):
 
 app = create_app(os.getenv('FLASK_CONFIG') or 'default')
 bootstrap = Bootstrap(app)
+CORS(app)
 
 @app.route("/")
 def index():
@@ -78,6 +80,8 @@ def add_tarefa():
         custo=request.form.get('custo'),
         ordem=Tarefa.query.count()+1
     )
+    if Tarefa.query.filter_by(tarNome=tarefa.tarNome) is not None:
+        abort(404)
     if tarefa.dataLimite == '':
         tarefa.dataLimite = None
     db.session.add(tarefa)
@@ -93,6 +97,8 @@ def update_tarefa(tarId):
     if tarefa is None:
         abort(404)
     tarefa.tarNome = request.form.get('tarNome', tarefa.tarNome)
+    if Tarefa.query.filter_by(tarNome=tarefa.tarNome) is not None:
+        abort(404)
     tarefa.dataLimite = request.form.get('dataLimite', tarefa.dataLimite)
     tarefa.custo = request.form.get('custo', tarefa.custo)
     tarefa.ordem = request.form.get('ordem', tarefa.ordem)
@@ -105,9 +111,8 @@ def update_priority(tarId):
     '''Caso seja a primeira ativação dessa função, guarde a tarefa escolhida na tabela.
     Caso seja a segunda ativação e seja o mesmo elemento, resete a variavel cached_tarefa para None.
     Caco seja a segunda ativação e seja uma tarefa diferente, troque a prioridade entre as duas e volte cached_tarefa para None.'''
-    print("auau")
     if client.get('cached_tarefa', False) == False:#nao ha essa chave registrada?
-        client.add('cached_tarefa', str(tarId), 60)
+        client.add('cached_tarefa', str(tarId), 20)
     elif str(client.get('cached_tarefa'))=="b'"+str(tarId)+"'":#esse é o formato que o get retorna, b'<value>'
         client.delete('cached_tarefa')#se a mesma id ja esta registrada, apague
     elif str(client.get('cached_tarefa'))!="b'"+str(tarId)+"'":
@@ -147,3 +152,4 @@ def update2_tarefa(tarId):
     tarefa.ordem = request.json.get('ordem', tarefa.ordem)
     db.session.commit()
     return jsonify(tarefa.to_json())
+
