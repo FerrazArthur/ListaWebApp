@@ -23,6 +23,9 @@ body {
   tbody, thead {
     display: block;
   }
+  tbody-table{
+    height: 430px; overflow-y: auto;
+}
   tr:after {
     content: ' ';
     display: block;

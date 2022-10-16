@@ -74,14 +74,16 @@ def index():
 def add_tarefa():
     if not request.form:
         abort(400)
+    nometemp=request.form.get('tarNome')
+    if Tarefa.query.filter_by(tarNome=nometemp).first() is not None:
+        abort(404)
+
     tarefa = Tarefa(
-        tarNome=request.form.get('tarNome'),
+        tarNome=nometemp,
         dataLimite=request.form.get('dataLimite'),
         custo=request.form.get('custo'),
         ordem=Tarefa.query.count()+1
     )
-    if Tarefa.query.filter_by(tarNome=tarefa.tarNome) is not None:
-        abort(404)
     if tarefa.dataLimite == '':
         tarefa.dataLimite = None
     db.session.add(tarefa)
@@ -96,9 +98,10 @@ def update_tarefa(tarId):
     tarefa = Tarefa.query.get(tarId)
     if tarefa is None:
         abort(404)
-    tarefa.tarNome = request.form.get('tarNome', tarefa.tarNome)
-    if Tarefa.query.filter_by(tarNome=tarefa.tarNome) is not None:
+    nometemp = request.form.get('tarNome', tarefa.tarNome)
+    if Tarefa.query.filter_by(tarNome=nometemp).first() is not None:
         abort(404)
+        tarefa.tarNome=nometemp
     tarefa.dataLimite = request.form.get('dataLimite', tarefa.dataLimite)
     tarefa.custo = request.form.get('custo', tarefa.custo)
     tarefa.ordem = request.form.get('ordem', tarefa.ordem)
