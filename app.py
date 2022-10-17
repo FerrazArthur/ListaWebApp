@@ -112,8 +112,8 @@ def update_tarefa(tarId):
 @app.route('/update_priority/<int:tarId>')
 def update_priority(tarId):
     '''Caso seja a primeira ativação dessa função, guarde a tarefa escolhida na tabela.
-    Caso seja a segunda ativação e seja o mesmo elemento, resete a variavel cached_tarefa para None.
-    Caco seja a segunda ativação e seja uma tarefa diferente, troque a prioridade entre as duas e volte cached_tarefa para None.'''
+    Caso seja a segunda ativação e seja o mesmo elemento, resete a variavel cached_tarefa.
+    Caco seja a segunda ativação e seja uma tarefa diferente, troque a prioridade entre as duas e volte cached_tarefa.'''
     if client.get('cached_tarefa', False) == False:#nao ha essa chave registrada?
         client.add('cached_tarefa', str(tarId), 2592000)
     elif str(client.get('cached_tarefa'))=="b'"+str(tarId)+"'":#esse é o formato que o get retorna, b'<value>'
