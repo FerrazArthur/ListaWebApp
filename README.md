@@ -23,7 +23,7 @@ pra iniciar o ambiente:
 ## Hostear a aplicação no local host:
 
 #### Iniciar os containers com o comando:
-   > **docker-compose up**
+   > **docker-compose up -d**
 
 ##### ***Os seguintes containers devem estar rodando na sua máquina:***
 
