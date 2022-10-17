@@ -74,14 +74,16 @@ def index():
 def add_tarefa():
     if not request.form:
         abort(400)
+    nometemp=request.form.get('tarNome')
+    if Tarefa.query.filter_by(tarNome=nometemp).first() is not None:
+        abort(400, 'Erro de entrada: O nome '+nometemp+' já esta sendo utilizado por uma tarefa. Por favor tente outro nome')
+
     tarefa = Tarefa(
-        tarNome=request.form.get('tarNome'),
+        tarNome=nometemp,
         dataLimite=request.form.get('dataLimite'),
         custo=request.form.get('custo'),
         ordem=Tarefa.query.count()+1
     )
-    if Tarefa.query.filter_by(tarNome=tarefa.tarNome) is not None:
-        abort(404)
     if tarefa.dataLimite == '':
         tarefa.dataLimite = None
     db.session.add(tarefa)
@@ -95,10 +97,11 @@ def update_tarefa(tarId):
         abort(400)
     tarefa = Tarefa.query.get(tarId)
     if tarefa is None:
-        abort(404)
-    tarefa.tarNome = request.form.get('tarNome', tarefa.tarNome)
-    if Tarefa.query.filter_by(tarNome=tarefa.tarNome) is not None:
-        abort(404)
+        abort(400)
+    nometemp = request.form.get('tarNome', tarefa.tarNome)
+    if Tarefa.query.filter_by(tarNome=nometemp).first() is not None:
+        abort(400, 'Erro de entrada: O nome '+nometemp+' já esta sendo utilizado por uma tarefa. Por favor tente outro nome')
+        tarefa.tarNome=nometemp
     tarefa.dataLimite = request.form.get('dataLimite', tarefa.dataLimite)
     tarefa.custo = request.form.get('custo', tarefa.custo)
     tarefa.ordem = request.form.get('ordem', tarefa.ordem)
@@ -112,7 +115,7 @@ def update_priority(tarId):
     Caso seja a segunda ativação e seja o mesmo elemento, resete a variavel cached_tarefa para None.
     Caco seja a segunda ativação e seja uma tarefa diferente, troque a prioridade entre as duas e volte cached_tarefa para None.'''
     if client.get('cached_tarefa', False) == False:#nao ha essa chave registrada?
-        client.add('cached_tarefa', str(tarId), 20)
+        client.add('cached_tarefa', str(tarId), 2592000)
     elif str(client.get('cached_tarefa'))=="b'"+str(tarId)+"'":#esse é o formato que o get retorna, b'<value>'
         client.delete('cached_tarefa')#se a mesma id ja esta registrada, apague
     elif str(client.get('cached_tarefa'))!="b'"+str(tarId)+"'":
@@ -121,7 +124,6 @@ def update_priority(tarId):
         tarefaTemp2=Tarefa.query.get(tarId)
         client.delete('cached_tarefa')
         if tarefaTemp1 is None or tarefaTemp2 is None:
-            print("nao deu certo")
             abort(404)
         ordemTemp=tarefaTemp1.ordem
         tarefaTemp1.ordem=tarefaTemp2.ordem

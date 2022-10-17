@@ -5,7 +5,6 @@
 {% block head %}
 {{ super() }}
 <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
-<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
 {% endblock %}
 
 {% block navbar %}
@@ -46,10 +45,70 @@
     {
         element = document.getElementById(id)
         if ( custo >= 1000)
-            element.style.backgroundColor = "#cfda34";
-        return id
+            element.style.backgroundColor = '#E65100';
     }
 </script>
+<script>
+    function markButton(id)
+    {
+        element = document.getElementById(id)
+
+        if (window.getComputedStyle(element) == 'offset' )
+        {
+            element.style.borderStyle = 'inset';
+        }
+    }
+</script>
+<script>    
+    function adjustTableHeaders(id)
+    {
+        // adjust swap
+        var elementtd1=document.getElementById("td-swap"+id);
+        var elementth1=document.getElementById("th-swap");
+        if(elementtd1 == null || elementth1 == null)
+        {
+            return;
+        }
+        if (parseFloat(window.getComputedStyle(elementtd1).width) != parseFloat(window.getComputedStyle(elementth1).width))
+        {
+            elementth1.style.width=window.getComputedStyle(elementtd1).width;
+        }
+        // adjust nome
+        elementtd1=document.getElementById("td-nome"+id);
+        elementth1=document.getElementById("th-nome");
+        if(elementtd1 == null || elementth1 == null)
+        {
+            return;
+        }
+        if (parseFloat(window.getComputedStyle(elementtd1).width) != parseFloat(window.getComputedStyle(elementth1).width))
+        {
+            elementth1.style.width=window.getComputedStyle(elementtd1).width;
+        }
+        // adjust data
+        elementtd1=document.getElementById("td-data"+id);
+        elementth1=document.getElementById("th-data");
+        if(elementtd1 == null || elementth1 == null)
+        {
+            return;
+        }
+        if (parseFloat(window.getComputedStyle(elementtd1).width) != parseFloat(window.getComputedStyle(elementth1).width))
+        {
+            elementth1.style.width=window.getComputedStyle(elementtd1).width;
+        }
+        // adjust custo
+        elementtd1=document.getElementById("td-custo"+id);
+        elementth1=document.getElementById("th-custo");
+        if(elementtd1 == null || elementth1 == null)
+        {
+            return;
+        }
+        if (parseFloat(window.getComputedStyle(elementtd1).width) != parseFloat(window.getComputedStyle(elementth1).width))
+        {
+            elementth1.style.width=window.getComputedStyle(elementtd1).width;
+        }
+    }
+</script>
+
 <div class="container">
     {% block page_content %} {% endblock %}
 </div>
