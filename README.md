@@ -16,6 +16,8 @@ pra iniciar o ambiente:
 >**docker-compose up**
 
 #### Passo 4) Executar o script setup.sh para criar a tabela
+>**./setup.sh**
+
 ***
 
 ## Hostear a aplicação no local host:
