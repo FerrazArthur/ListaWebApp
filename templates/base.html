@@ -27,14 +27,47 @@
 
 {% block content %}
 <script>
+    function markChange(id)
+    {
+        callURL(id);
+        // markButton('button-swap'+id);
+    }
+</script>
+<script>
     function callURL(tarId)
     {
         const req = new XMLHttpRequest();
         req.open("GET", "http://172.17.0.1:8000/update_priority/" + tarId);
         req.send();
-        location. reload();
+        location.reload();
     }
 </script>
+<!-- <script>
+    function markButton(id)
+    {//essa função altera a cor dos botões pressionados
+        element = document.getElementById(id);
+        if (window.getComputedStyle(element).background-color == '#696969' )
+        {
+            element.style.background-color = '#DCDCDC';
+        }
+        else
+        {
+            element.style.background-color = '#696969';
+        }
+    }
+    // function markButton(id) a ideia era manter o botão pressionado, mas toda vez que o botão é apertado a pagina recarrega então não deu;
+    // {//this function receive 
+    //     element = document.getElementById(id);
+    //     if (window.getComputedStyle(element).borderStyle == 'outset' )
+    //     {
+    //         element.style.borderStyle = 'inset';
+    //     }
+    //     else
+    //     {
+    //         element.style.borderStyle = 'outset';
+    //     }
+    // }
+</script> -->
 <script>
     function changeColor(id, custo)
     {
@@ -43,17 +76,7 @@
             element.style.backgroundColor = '#E65100';
     }
 </script>
-<script>
-    function markButton(id)
-    {
-        element = document.getElementById(id)
 
-        if (window.getComputedStyle(element) == 'offset' )
-        {
-            element.style.borderStyle = 'inset';
-        }
-    }
-</script>
 <script>    
     function adjustTableHeaders(id)
     {

@@ -1,12 +1,11 @@
 # ListaWebApp
 Aplicação feita para processo seletivo da empresa Fatto
-pra iniciar o ambiente:
 
 ## Passos para configurar seu ambiente:
 
 #### Passo 1) Clonar o repositório com o comando:
 
->**git clone linkdorepositório**
+>**git clone <linkdorepositório>**
 
 #### Passo 2) Instalar o docker ce e o docker-compose mais atuais para seu sistema atual;
 
