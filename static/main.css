@@ -1,42 +1,24 @@
-body {
-    background: Linen;
-    margin-top: 50px;
-    margin-left: 100px;
-    }
-   
-  h1 {
-    font-family: Verdana, Geneva, sans-serif;
-    font-size: 2.5em;
-    color: '263238';
-    }
-   
-  p {
-    font-family: Georgia, serif;
-    font-size: 1.2em;
-    color: DarkSlateGray;
-    }
+.flex-table {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+.flex-container {
+  display: flex;
+  justify-content: flex-start;
+}
+.flex-container-drag {
+  cursor:move;
+  display: flex;
+  justify-content: flex-start;
+}
 
-  td, th {
-      text-align: center;
-      box-sizing: border-box;
-  }
-  tbody, thead {
-    display: block;
-  }
-  tbody-table{
-    height: 430px;
-    overflow-y: auto;
-}
-  tr:after {
-    content: ' ';
-    display: block;
-    visibility: hidden;
-    clear: both;
-}
-  .starter-template {
-      padding: 40px 15px;
-      text-align: center;
-  }
-.swap-button {
-  font-size: 8px;
+
+.flex-container-column{
+  display: flex;
+  align-self: center;
+  justify-content: center;
+  min-width: 20%;
+  max-width: 100%;
 }

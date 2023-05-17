@@ -11,7 +11,7 @@ aria-labelledby="basicModal" aria-hidden="true">
             <form action="{{url_for('update_tarefa', tarId=tarefa['tarId'])}}" method="post">
                     <div class="modal-body">
                     <div class="form-group row">
-                        <label for="dataLimite" class="col-xs-2 control-label">Nome da Tarefa</label>
+                        <label for="tarNome" class="col-xs-2 control-label">Nome da Tarefa</label>
                         <div class="col-xs-10">
                             <input type="text" class="form-control" name="tarNome"
                                 value="{{tarefa['tarNome']}}" />
@@ -25,7 +25,7 @@ aria-labelledby="basicModal" aria-hidden="true">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="dataLimite" class="col-xs-2 control-label">custo</label>
+                        <label for="custo" class="col-xs-2 control-label">custo</label>
                         <div class="col-xs-10">
                             <input type="number" step="0.01" class="form-control" name="custo"
                                 value="{{tarefa['custo']}}" />

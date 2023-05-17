@@ -1,65 +1,46 @@
 {% extends "base.html" %}
 
 {% block page_content %}
-<div class="starter-template">
-    <h1>
-        Lista de tarefas
-    </h1>
-</div>
-
+<div class="starter-template" style="text-align: center"></div>
 {% include "adicionarTarefa.html" %}
-<div class="row">
-    <div class="col-md-6"style="width: 70%">
-        <table class="table table-striped" style="table-layout: fixed;">
-            {% set tarIdns = namespace(id=0) %}
-            {% set flag = namespace(leu=0) %}
-            <thead>
-                <tr>
-                    <th id="th-swap" style="width:70px;"></th>
-                    <th id="th-nome">Tarefa</th>
-                    <th id="th-data" style="width: 120px;">Data limite</th>
-                    <th id="th-custo">custo</th>
-                    <th id="th-uprm"colspan="3"></th>
-                </tr>
-            </thead>
-            <tbody style="height: 430px; overflow-y: auto;">
-                {% for tarefa in tarefas %}
-                <tr id="{{ tarefa['tarId'] }}">
-                    <script type="text/javascript">
-                        changeColor({{ tarefa['tarId'] }}, {{ tarefa['custo'] }});
-                     </script>
-                    <!-- for some reason, this method never seems to work. i had to use ajax and javascript to be able to pull
-                        the url i wanted
-                        <td><button type="button" class="swap-button" data-toggle="modal"
-                        data-target="#update_priority_{{tarefa['tarId']}}">Mover</button></td> 
-                    <td><a href "http://172.17.0.1:8000/update_priority/{{ tarefa['tarId'] }}">SWAP</a></td> -->
-                    <td id="td-swap{{ tarefa['tarId'] }}"><button type="button" id="button-swap{{ tarefa['tarId'] }}" class="swap-button"
-                        onclick="markChange({{ tarefa['tarId'] }});">Mover</button></td>
-                    <td id="td-nome{{ tarefa['tarId'] }}">{{ tarefa.tarNome }}</td>
-                    <td id="td-data{{ tarefa['tarId'] }}">{{ tarefa.dataLimite }}</td>
-                    <td id="td-custo{{ tarefa['tarId'] }}">{{ tarefa.custo }}</td>
-                    <td id="td-update{{ tarefa['tarId'] }}"><button type="button" class="btn btn-success" data-toggle="modal"
-                            data-target="#update_tarefa_{{tarefa['tarId']}}">Editar</button></td>
-                    {% include "editarTarefa.html" %}
-                    <td id="td-remove{{ tarefa['tarId'] }}"><button type="button" class="btn btn-danger" data-toggle="modal"
-                            data-target="#delete_tarefa_{{tarefa['tarId']}}">Deletar</button></td>
-                    {% include "removerTarefa.html" %}
-                
-                </tr>
-                {% if flag.leu == 0 %}
-                {# execute this only the first time it loads#}
-                    {% set flag.leu = 1 %}
-                    {% set tarIdns.id = tarefa['tarId'] %}
-                {% endif %}
-                {% endfor %}
-            </tbody>
-        </table>
+<link rel="stylesheet" href="./main.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+ 
+<body>
+<div class="flex-table">
+    <h3>Lista de tarefas</h3>
+    <small>Tarefas com custo maior que 5000 recebem cor para destaque</small>
+    <div class="flex-container" id="header" style="justify-content: left">
+        <div class="flex-container-column"><h4>Tarefa</h4></div>
+        <div class="flex-container-column"><h4>Data</h4></div>
+        <div class="flex-container-column"><h4>Custo</h4></div>
+        <div class="flex-container-column"><button type="button" data-toggle="modal" class="btn-sm btn-primary" data-target="#insert_tarefa">Insira uma tarefa</button></div>
     </div>
-    <div><h4>para alterar a prioridade entre as tarefas, clique no botão mover das duas tarefas que deseja trocar</h4></div>
+    {% for tarefa in tarefas %}
+    <div class="flex-container-drag" id="{{tarefa['tarId']}}" order = {{tarefa['ordem']}} draggable=true >
+        <script type="text/javascript">
+            changeColor({{ tarefa['tarId'] }}, {{ tarefa['custo'] }});
+        </script>
+        <div class="flex-container-column">{{ tarefa.tarNome }}</div>
+        <div class="flex-container-column">{{ tarefa.dataLimite.strftime('%d-%m-%Y') }}</div>
+        <div class="flex-container-column">{{ tarefa.custo }}</div>
+        <div class="flex-container-column">
+            <button type="button" class="btn-sm btn-success" data-toggle="modal"
+            data-target="#update_tarefa_{{tarefa['tarId']}}" style="margin-right: 2px">Editar</button>
+            <button type="button" class="btn-sm btn-danger" data-toggle="modal"
+            data-target="#delete_tarefa_{{tarefa['tarId']}}">Deletar</button>
+        </div>
+    </div>
+    {% include "editarTarefa.html" %}
+    {% include "removerTarefa.html" %}
+    {% endfor %}
 </div>
-<script type="text/javascript">
-                adjustTableHeaders({{ tarIdns.id }});
-             </script>
-<button type="button" data-toggle="modal" class="btn btn-lg btn-primary" data-target="#insert_tarefa">Insira uma tarefa</button>
+</body>
+<script> let items = document.querySelectorAll('div.flex-container-drag');
+    items.forEach(function (item) {
+        item.addEventListener('dragstart', handleDragStart);
+        item.addEventListener('dragend', handleDragEnd)
+    }
+</script>
 
 {% endblock %}

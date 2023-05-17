@@ -99,8 +99,9 @@ def update_tarefa(tarId):
     if tarefa is None:
         abort(400)
     nometemp = request.form.get('tarNome', tarefa.tarNome)
-    if Tarefa.query.filter_by(tarNome=nometemp).first() is not None:
+    if tarefa.tarNome != nometemp and Tarefa.query.filter_by(tarNome=nometemp).first() is not None:
         abort(400, 'Erro de entrada: O nome '+nometemp+' já esta sendo utilizado por uma tarefa. Por favor tente outro nome')
+    else:
         tarefa.tarNome=nometemp
     tarefa.dataLimite = request.form.get('dataLimite', tarefa.dataLimite)
     tarefa.custo = request.form.get('custo', tarefa.custo)

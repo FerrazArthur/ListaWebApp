@@ -5,23 +5,6 @@
 {% block head %}
 {{ super() }}
 <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
-{% endblock %}
-
-{% block navbar %}
-<nav class="navbar navbar-inverse navbar-fixed-top">
-    <div class="container">
-        <div class "navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
-                aria-expanded="false" aria-controls="navbar">
-                <span class="sr-only">Toggle navigation<\span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="/">Tarefas</a>
-        </div>
-    </div>
-</nav>
 
 {% endblock %}
 
@@ -42,88 +25,26 @@
         location.reload();
     }
 </script>
-<!-- <script>
-    function markButton(id)
-    {//essa função altera a cor dos botões pressionados
-        element = document.getElementById(id);
-        if (window.getComputedStyle(element).background-color == '#696969' )
-        {
-            element.style.background-color = '#DCDCDC';
-        }
-        else
-        {
-            element.style.background-color = '#696969';
-        }
-    }
-    // function markButton(id) a ideia era manter o botão pressionado, mas toda vez que o botão é apertado a pagina recarrega então não deu;
-    // {//this function receive 
-    //     element = document.getElementById(id);
-    //     if (window.getComputedStyle(element).borderStyle == 'outset' )
-    //     {
-    //         element.style.borderStyle = 'inset';
-    //     }
-    //     else
-    //     {
-    //         element.style.borderStyle = 'outset';
-    //     }
-    // }
-</script> -->
+<script>
+function handleDragStart(e) {
+  this.style.opacity = '0';
+}
+
+function handleDragEnd(e) {
+  this.style.opacity = '1';
+
+let items = document.querySelectorAll('.flex-container-drag');
+items.forEach(function (item) {
+    item.addEventListener('dragstart', handleDragStart);
+    item.addEventListener('dragend', handleDragEnd);
+}
+</script>
 <script>
     function changeColor(id, custo)
     {
         element = document.getElementById(id)
         if ( custo >= 1000)
             element.style.backgroundColor = '#E65100';
-    }
-</script>
-
-<script>    
-    function adjustTableHeaders(id)
-    {
-        // adjust swap
-        var elementtd1=document.getElementById("td-swap"+id);
-        var elementth1=document.getElementById("th-swap");
-        if(elementtd1 == null || elementth1 == null)
-        {
-            return;
-        }
-        if (parseFloat(window.getComputedStyle(elementtd1).width) != parseFloat(window.getComputedStyle(elementth1).width))
-        {
-            elementth1.style.width=window.getComputedStyle(elementtd1).width;
-        }
-        // adjust nome
-        elementtd1=document.getElementById("td-nome"+id);
-        elementth1=document.getElementById("th-nome");
-        if(elementtd1 == null || elementth1 == null)
-        {
-            return;
-        }
-        if (parseFloat(window.getComputedStyle(elementtd1).width) != parseFloat(window.getComputedStyle(elementth1).width))
-        {
-            elementth1.style.width=window.getComputedStyle(elementtd1).width;
-        }
-        // adjust data
-        elementtd1=document.getElementById("td-data"+id);
-        elementth1=document.getElementById("th-data");
-        if(elementtd1 == null || elementth1 == null)
-        {
-            return;
-        }
-        if (parseFloat(window.getComputedStyle(elementtd1).width) != parseFloat(window.getComputedStyle(elementth1).width))
-        {
-            elementth1.style.width=window.getComputedStyle(elementtd1).width;
-        }
-        // adjust custo
-        elementtd1=document.getElementById("td-custo"+id);
-        elementth1=document.getElementById("th-custo");
-        if(elementtd1 == null || elementth1 == null)
-        {
-            return;
-        }
-        if (parseFloat(window.getComputedStyle(elementtd1).width) != parseFloat(window.getComputedStyle(elementth1).width))
-        {
-            elementth1.style.width=window.getComputedStyle(elementtd1).width;
-        }
     }
 </script>
 
