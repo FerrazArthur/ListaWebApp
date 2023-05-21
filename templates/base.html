@@ -14,7 +14,6 @@
     {
         const req = new XMLHttpRequest();
         req.open("POST", "http://172.17.0.1:8000/update_priority/" + tarId + '/' + tarId2);
-        console.log(tarId, tarId2);
         req.onload = function() {
             if (req.status === 200) {
                 console.log("Atualização de prioridade salva com sucesso!");
@@ -30,18 +29,15 @@
     }
 </script>
 <script>
-    $(document).ready(function() {
-        var draggedItem = null;
-    
-        $(".flex-container-drag").on("dragstart", function(event) {
+    var draggedItem = null;
+
+    function escolher() {
             draggedItem = $(this);
-        });
-    
-        $(".flex-container-drag").on("dragover", function(event) {
+    }
+    function arrastar() {
             event.preventDefault();
-        });
-    
-        $(".flex-container-drag").on("drop", function(event) {
+    }
+    function soltar() {
             if (draggedItem) {
                 var draggedItemOrder = draggedItem.attr("order");
                 var droppedItemOrder = $(this).attr("order");
@@ -56,14 +52,15 @@
                 else{
                     draggedItem.insertAfter($(this));
                 }
-                console.log("ids: ", draggedItem.attr("id"), $(this).attr("id"))
                 atualizarOrdem(draggedItem.attr("id"), $(this).attr("id"));
 
                 draggedItem = null;
             }
-        });
+    }
+    $(document).ready(function() {
+        $(".flex-container-drag").on("dragstart", escolher).on("dragover", arrastar).on("drop", soltar).on("touchstart",escolher).on("touchmove",arrastar).on("touchend",soltar);
     });
-    </script>
+</script>
 <script>
     function changeColor(id, custo)
     {
