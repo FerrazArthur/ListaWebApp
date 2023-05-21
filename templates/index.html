@@ -3,7 +3,6 @@
 {% block page_content %}
 <div class="starter-template" style="text-align: center"></div>
 {% include "adicionarTarefa.html" %}
-<link rel="stylesheet" href="./main.css">
 <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
  
 <body>
@@ -22,7 +21,11 @@
             changeColor({{ tarefa['tarId'] }}, {{ tarefa['custo'] }});
         </script>
         <div class="flex-container-column">{{ tarefa.tarNome }}</div>
+        {% if tarefa.dataLimite != none %}
         <div class="flex-container-column">{{ tarefa.dataLimite.strftime('%d-%m-%Y') }}</div>
+        {% else %}
+        <div class="flex-container-column">{{ tarefa.dataLimite }}</div>
+        {% endif %}
         <div class="flex-container-column">{{ tarefa.custo }}</div>
         <div class="flex-container-column">
             <button type="button" class="btn-sm btn-success" data-toggle="modal"
@@ -36,11 +39,5 @@
     {% endfor %}
 </div>
 </body>
-<script> let items = document.querySelectorAll('div.flex-container-drag');
-    items.forEach(function (item) {
-        item.addEventListener('dragstart', handleDragStart);
-        item.addEventListener('dragend', handleDragEnd)
-    }
-</script>
 
 {% endblock %}

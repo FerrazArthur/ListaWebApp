@@ -17,15 +17,6 @@ services:
             - app-network
         volumes:
             - ./database:/var/lib/mysql
-    memcached-app:
-        image: bitnami/memcached:1.6.17-debian-11-r15
-        container_name: memcached
-        restart: unless-stopped
-        tty: true
-        environment:
-            - MEMCACHED_CACHE_SIZE=64
-        networks:
-            - app-network
     tarefas-app:
         build: ./
         container_name: tarefas-app
@@ -35,7 +26,6 @@ services:
         working_dir: /app/
         depends_on:
             - mysql-app
-            - memcached-app
         ports:
             - "8000:8000"
         expose:

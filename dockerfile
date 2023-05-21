@@ -1,2 +1,2 @@
 FROM python:latest
-RUN pip install flask flask-sqlalchemy PyMySQL flask-bootstrap cryptography pymemcache Flask-Cors
+RUN pip install flask flask-sqlalchemy PyMySQL flask-bootstrap cryptography Flask-Cors

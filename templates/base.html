@@ -5,40 +5,65 @@
 {% block head %}
 {{ super() }}
 <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
-
 {% endblock %}
 
 {% block content %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-    function markChange(id)
-    {
-        callURL(id);
-        // markButton('button-swap'+id);
-    }
-</script>
-<script>
-    function callURL(tarId)
+    function atualizarOrdem(tarId, tarId2)
     {
         const req = new XMLHttpRequest();
-        req.open("GET", "http://172.17.0.1:8000/update_priority/" + tarId);
+        req.open("POST", "http://172.17.0.1:8000/update_priority/" + tarId + '/' + tarId2);
+        console.log(tarId, tarId2);
+        req.onload = function() {
+            if (req.status === 200) {
+                console.log("Atualização de prioridade salva com sucesso!");
+            } 
+            else if(req.status === 404) {
+                console.log(req.responseText);
+            }
+            else {
+                console.log("Ocorreu um erro ao atualizar prioridade.");
+            }
+        };
         req.send();
-        location.reload();
     }
 </script>
 <script>
-function handleDragStart(e) {
-  this.style.opacity = '0';
-}
+    $(document).ready(function() {
+        var draggedItem = null;
+    
+        $(".flex-container-drag").on("dragstart", function(event) {
+            draggedItem = $(this);
+        });
+    
+        $(".flex-container-drag").on("dragover", function(event) {
+            event.preventDefault();
+        });
+    
+        $(".flex-container-drag").on("drop", function(event) {
+            if (draggedItem) {
+                var draggedItemOrder = draggedItem.attr("order");
+                var droppedItemOrder = $(this).attr("order");
 
-function handleDragEnd(e) {
-  this.style.opacity = '1';
+                draggedItem.attr("order", droppedItemOrder);
+                $(this).attr("order", draggedItemOrder);
 
-let items = document.querySelectorAll('.flex-container-drag');
-items.forEach(function (item) {
-    item.addEventListener('dragstart', handleDragStart);
-    item.addEventListener('dragend', handleDragEnd);
-}
-</script>
+                var previousItem = $(this).previousItem;
+                if (draggedItem.index() > $(this).index()){
+                    draggedItem.insertBefore($(this));
+                }
+                else{
+                    draggedItem.insertAfter($(this));
+                }
+                console.log("ids: ", draggedItem.attr("id"), $(this).attr("id"))
+                atualizarOrdem(draggedItem.attr("id"), $(this).attr("id"));
+
+                draggedItem = null;
+            }
+        });
+    });
+    </script>
 <script>
     function changeColor(id, custo)
     {
@@ -47,7 +72,6 @@ items.forEach(function (item) {
             element.style.backgroundColor = '#E65100';
     }
 </script>
-
 <div class="container">
     {% block page_content %} {% endblock %}
 </div>
