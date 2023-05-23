@@ -1,5 +1,6 @@
 # ListaWebApp
-    Aplicação web consistindo de uma lista de tarefas com nome, custo e data de validade, cuja persistência dos dados é garantida por um container com um banco de dados.
+
+Aplicação web consistindo de uma lista de tarefas com nome, custo e data de validade, cuja persistência dos dados é garantida por um container com um banco de dados.
 
 ## Passos para configurar seu ambiente:
 
