@@ -1,5 +1,5 @@
 # ListaWebApp
-Aplicação feita para processo seletivo da empresa Fatto
+    Aplicação web consistindo de uma lista de tarefas com nome, custo e data de validade, cuja persistência dos dados é garantida por um container com um banco de dados.
 
 ## Passos para configurar seu ambiente:
 
@@ -11,11 +11,15 @@ Aplicação feita para processo seletivo da empresa Fatto
 
 ## Passos para criar os containers após o clone:
 
-#### Passo 3) Executar o comando abaixo e aguardar o mysql terminar de criar o container
+- Na primeira execução, é preciso criar as tabelas no banco após subir os containers. Siga os passos abaixo.
+
+#### Passo 1) Executar o comando abaixo e aguardar o mysql terminar de criar o container
 >**docker-compose up**
 
-#### Passo 4) Executar o script setup.sh para criar a tabela
+#### Passo 2) Executar o script setup.sh para criar a tabela
 >**./setup.sh**
+
+- O passo 2 só é necessário na primeira execução do programa, pois uma vez criadas as tabelas, elas ficarão salvas na pasta.
 
 ***
 
